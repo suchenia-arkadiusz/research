@@ -2,7 +2,7 @@ package pl.arusoftware.research;
 
 import java.util.Map;
 
-public record ResearchResult(Map<String, Long> values, long limit) {
+public record ResearchResult(Map<String, Double> values, long limit) {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("{\n\tlimit: ").append(limit).append(",\n\tvalues: [");

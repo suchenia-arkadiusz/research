@@ -1,12 +1,15 @@
 package pl.arusoftware.research.patterns.result;
 
 import pl.arusoftware.research.ResearchResult;
+import pl.arusoftware.research.Stopwatch;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Test {
+    private static final Stopwatch stopwatch = new Stopwatch();
+
     public static void main(String[] args) {
         long[] limits = new long[]{1, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000, 100_000_000};
         for (long limit : limits) {
@@ -15,18 +18,18 @@ public class Test {
     }
 
     private static void runTest(long limit) {
-        long resultStartMillis = System.nanoTime();
+        stopwatch.reset();
         testResult(limit);
-        long resultEndMillis = System.nanoTime();
+        double resultExecutionTimeInNanos = stopwatch.getTimeInNanos();
 
-        long exceptionStartMillis = System.nanoTime();
+        stopwatch.reset();
         testException(limit);
-        long exceptionEndMillis = System.nanoTime();
+        double exceptionExecutionTimeInNanos = stopwatch.getTimeInNanos();
 
 
         ResearchResult researchResult = new ResearchResult(Map.of(
-                "resultPattern", resultEndMillis - resultStartMillis,
-                "exception", exceptionEndMillis - exceptionStartMillis
+                "resultPattern", resultExecutionTimeInNanos,
+                "exception", exceptionExecutionTimeInNanos
         ), limit);
         System.out.println(researchResult);
     }
